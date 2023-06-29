@@ -9,8 +9,13 @@ const Home = () => {
   const [videos, setVideos] = useState([]);  
   const [searchActive, setSearchActive] = useState(false);  
   
-  const searchVideos = async (searchTerm) => {  
-    const response = await axios.get('http://localhost:8000/api/videos', {  
+  const searchVideos = async (searchTerm) => { 
+    const port = process.env.NEXT_PUBLIC_BACKEND_PORT;
+    const host = process.env.NEXT_PUBLIC_BACKEND_HOST;
+    const http = process.env.NEXT_PUBLIC_BACKEND_HTTP;
+    const url = `${http}://${host}:${port}/api/videos`;
+    console.log(`url: ${url}`);
+    const response = await axios.get(url, {  
       params: { query: searchTerm },  
     });  
   
