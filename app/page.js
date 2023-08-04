@@ -40,7 +40,7 @@ const Home = () => {
       <div className="container mx-auto px-4">  
         <div className="text-center mb-8">  
           <img  
-            src="tappki_logo1.png"  
+            src="tappki_logo2.png"  
             alt="Logo"  
             className="mx-auto mb-4 h-32"  
           />  

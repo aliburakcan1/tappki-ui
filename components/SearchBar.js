@@ -16,7 +16,7 @@ const SearchBar = ({ onSubmit }) => {
         value={query}  
         onChange={(e) => setQuery(e.target.value)}  
         className="w-full rounded-full p-4 border border-gray-300 outline-none focus:border-blue-500"  
-        placeholder="Search..."  
+        placeholder="Tepki ara.."  
       />  
       <button  
         type="submit"  
