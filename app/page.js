@@ -18,7 +18,14 @@ const Home = () => {
     const port = process.env.NEXT_PUBLIC_BACKEND_PORT;  
     const host = process.env.NEXT_PUBLIC_BACKEND_HOST;  
     const http = process.env.NEXT_PUBLIC_BACKEND_HTTP;  
-    const url = `${http}://${host}:${port}/api/videos`;  
+    const deployenv = process.env.NEXT_PUBLIC_DEPLOYENV;
+    //const url = `${http}://${host}:${port}/api/videos`;  
+    // if deployenv is not production, then add the port to the url
+    if (deployenv !== 'digitalocean') {
+      const url = `${http}://${host}:${port}/api/videos`;  
+    } else {
+      const url = `${http}://${host}/api/videos`;  
+    }
     console.log(`url: ${url}`);  
     const response = await axios.get(url, {  
       params: { query: searchTerm, page, limit: videosPerPage },  
