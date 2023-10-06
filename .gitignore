@@ -28,4 +28,3 @@ yarn-error.log*
 .env.development
 .env.test.local
 .env.production
-public/tappki_logo2.png
