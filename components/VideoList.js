@@ -12,17 +12,9 @@ const VideoList = ({ videos }) => {
   
   const handleDownload = async (videoId) => { 
     // Get download link from backend
-    const port = process.env.NEXT_PUBLIC_BACKEND_PORT;  
     const host = process.env.NEXT_PUBLIC_BACKEND_HOST;  
     const http = process.env.NEXT_PUBLIC_BACKEND_HTTP;
-    const deployenv = process.env.NEXT_PUBLIC_DEPLOYENV;
-    //const url = `${http}://${host}:${port}/api/get_download_link`; 
-    // if deployenv is not production, then add the port to the url
-    if (deployenv !== 'digitalocean') {
-      const url = `${http}://${host}:${port}/api/get_download_link`;  
-    } else {
-      const url = `${http}://${host}/api/get_download_link`;  
-    }
+    const url = `${http}://${host}/api/get_download_link`; 
     // convert videoId to string
     const response = await axios.get(url, {  
       params: { videoId },  

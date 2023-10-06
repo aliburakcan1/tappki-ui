@@ -15,17 +15,9 @@ const Home = () => {
   const videosPerPage = 12;  
   
   const searchVideos = async (searchTerm, page = 1) => {  
-    const port = process.env.NEXT_PUBLIC_BACKEND_PORT;  
     const host = process.env.NEXT_PUBLIC_BACKEND_HOST;  
     const http = process.env.NEXT_PUBLIC_BACKEND_HTTP;  
-    const deployenv = process.env.NEXT_PUBLIC_DEPLOYENV;
-    //const url = `${http}://${host}:${port}/api/videos`;  
-    // if deployenv is not production, then add the port to the url
-    if (deployenv !== 'digitalocean') {
-      const url = `${http}://${host}:${port}/api/videos`;  
-    } else {
-      const url = `${http}://${host}/api/videos`;  
-    }
+    const url = `${http}://${host}/api/videos`;
     console.log(`url: ${url}`);  
     const response = await axios.get(url, {  
       params: { query: searchTerm, page, limit: videosPerPage },  
