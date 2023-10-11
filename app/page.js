@@ -18,7 +18,6 @@ const Home = () => {
     const host = process.env.NEXT_PUBLIC_BACKEND_HOST;  
     const http = process.env.NEXT_PUBLIC_BACKEND_HTTP;  
     const url = `${http}://${host}/api/videos`;
-    console.log(`url: ${url}`);  
     const response = await axios.get(url, {  
       params: { query: searchTerm, page, limit: videosPerPage },  
     });  
