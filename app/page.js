@@ -5,21 +5,24 @@ import axios from 'axios';
 import SearchBar from '../components/SearchBar';  
 import VideoList from '../components/VideoList';  
 import Pagination from '../components/Pagination';  
+import { v4 as uuidv4 } from 'uuid'; // import uuidv4 from uuid package
   
 const Home = () => {  
   const [videos, setVideos] = useState([]);  
   const [searchActive, setSearchActive] = useState(false);  
   const [currentPage, setCurrentPage] = useState(1);  
   const [totalVideos, setTotalVideos] = useState(0);
-  const [searchTerm, setSearchTerm] = useState('');    
-  const videosPerPage = 12;  
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sessionId, setSessionId] = useState(uuidv4()); // generate UUID and store in state  
+  const videosPerPage = 9;  
   
   const searchVideos = async (searchTerm, page = 1) => {  
     const host = process.env.NEXT_PUBLIC_BACKEND_HOST;  
     const http = process.env.NEXT_PUBLIC_BACKEND_HTTP;  
     const url = `${http}://${host}/api/videos`;
     const response = await axios.get(url, {  
-      params: { query: searchTerm, page, limit: videosPerPage },  
+      params: { query: searchTerm, page, limit: videosPerPage }, 
+      headers: { 'X-Session-ID': sessionId }, // add header to request 
     });  
     setVideos(response.data.videos);  
     setTotalVideos(response.data.total);  
@@ -49,6 +52,7 @@ const Home = () => {
         {videos.length > 0 && (  
           <VideoList  
             videos={videos}  
+            sessionId={sessionId} // Pass sessionId to VideoList component
             key={JSON.stringify(videos)} // Add key prop to force a re-render  
           />  
         )}  

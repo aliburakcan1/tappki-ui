@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';  
 import axios from 'axios';  
   
-const VideoList = ({ videos }) => {  
+const VideoList = ({ videos, sessionId }) => {  
   useEffect(() => {  
     if (window.twttr) {  
       window.twttr.widgets.load();  
@@ -18,6 +18,7 @@ const VideoList = ({ videos }) => {
     // convert videoId to string
     const response = await axios.get(url, {  
       params: { videoId },  
+      headers: { 'X-Session-ID': sessionId }, // add header to request
     }); 
     
     // Open download link in new tab
