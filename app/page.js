@@ -1,11 +1,14 @@
 // app/page.js
 'use client';
-import React, { useState } from 'react';  
+import React, { useState } from 'react'; 
+import { useContext } from 'react';  
 import axios from 'axios';  
 import SearchBar from '../components/SearchBar';  
 import VideoList from '../components/VideoList';  
 import Pagination from '../components/Pagination';  
-import { v4 as uuidv4 } from 'uuid'; // import uuidv4 from uuid package
+//import { v4 as uuidv4 } from 'uuid'; // import uuidv4 from uuid package
+import { SessionContext } from './SessionContext';  
+
   
 const Home = () => {  
   const [videos, setVideos] = useState([]);  
@@ -13,7 +16,8 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);  
   const [totalVideos, setTotalVideos] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-  const [sessionId, setSessionId] = useState(uuidv4()); // generate UUID and store in state  
+  //const [sessionId, setSessionId] = useState(uuidv4()); // generate UUID and store in state  
+  const { sessionId } = useContext(SessionContext); // get sessionId from context
   const videosPerPage = 9;  
   
   const searchVideos = async (searchTerm, page = 1) => {  
