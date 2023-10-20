@@ -1,11 +1,13 @@
 // app/page.js
+
 'use client';
 import React, { useState } from 'react'; 
 import { useContext } from 'react';  
 import axios from 'axios';  
 import SearchBar from '../components/SearchBar';  
 import VideoList from '../components/VideoList';  
-import Pagination from '../components/Pagination';  
+import Pagination from '../components/Pagination'; 
+import FilterBar from '../components/FilterBar'; 
 //import { v4 as uuidv4 } from 'uuid'; // import uuidv4 from uuid package
 import { SessionContext } from './SessionContext';  
 
@@ -16,6 +18,7 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);  
   const [totalVideos, setTotalVideos] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
+  const [filter, setFilter] = useState(''); // Add filter state variable
   //const [sessionId, setSessionId] = useState(uuidv4()); // generate UUID and store in state  
   const { sessionId } = useContext(SessionContext); // get sessionId from context
   const videosPerPage = 9;  
@@ -37,7 +40,11 @@ const Home = () => {
   
   const handlePageChange = (newPage, searchTerm) => {    
     searchVideos(searchTerm, newPage);    
-};   
+  };
+  
+  const handleFilterClick = (value) => {
+    setFilter(value);
+  }
     
   
   return (  
@@ -51,8 +58,10 @@ const Home = () => {
           />  
         </div>  
         <div className={`w-full ${searchActive ? "mb-8" : "mt-16"} sticky top-1 z-50`}>  
-          <SearchBar onSubmit={searchVideos} />  
+          <SearchBar onSubmit={searchVideos} filter={filter}/>  
         </div>  
+        <FilterBar onSubmit={searchVideos} onFilterClick={handleFilterClick} /> {/* Pass handleFilterClick function to FilterBar */}
+        
         {videos.length > 0 && (  
           <VideoList  
             videos={videos}  
