@@ -57,7 +57,7 @@ const Home = () => {
             className="mx-auto mb-4 h-32"  
           />  
         </div>  
-        <div className={`w-full ${searchActive ? "mb-8" : "mt-16"} sticky top-1 z-50`}>  
+        <div className={`w-full ${searchActive ? "mb-8" : "mt-16"} sticky top-1 z-10`}>  
           <SearchBar onSubmit={searchVideos} filter={filter}/>  
         </div>  
         <FilterBar onSubmit={searchVideos} onFilterClick={handleFilterClick} /> {/* Pass handleFilterClick function to FilterBar */}

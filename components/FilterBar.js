@@ -13,7 +13,7 @@ const FilterBar = ({ onFilterClick }) => {
         };
         
         return (
-            <div className="flex justify-center mt-4">
+            <div className="flex justify-center mt-4 flex-wrap">
                 {filterValues.map((value) => (
                     <button
                         key={value}

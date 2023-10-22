@@ -59,6 +59,7 @@ const SearchBar = ({ onSubmit, filter }) => {
         className="w-full rounded-full p-4 border border-gray-300 outline-none focus:border-blue-500"
         placeholder={`${filter ? `${filter.charAt(0).toUpperCase() + filter.slice(1)} ara...` : "Tepki ara..."}`}
         list="suggestions"
+        //autoComplete="off" // add autocomplete attribute to disable default behavior on mobile devices
       />
       <datalist id="suggestions">
         {suggestions && suggestions.map((suggestion) => (
