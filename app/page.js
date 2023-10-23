@@ -54,7 +54,7 @@ const Home = () => {
           <img  
             src="tappki_logo2.png"  
             alt="Logo"  
-            className="mx-auto mb-4 h-32"  
+            className={`mx-auto mb-4 h-32 ${ searchActive ? ( "invisible" ) : ( "visible" )} `}
           />  
         </div>  
         <div className={`w-full ${searchActive ? "mb-8" : "mt-16"} sticky top-1 z-10`}>  

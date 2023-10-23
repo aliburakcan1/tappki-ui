@@ -50,21 +50,35 @@ const SearchBar = ({ onSubmit, filter }) => {
     }
   }, [filter]);
 
+  const handleInputChange = (e) => {
+    const englishFilter = filterMapping[filter];
+    const filteredSuggestions = allSuggestions[englishFilter].filter((suggestion) =>
+      suggestion.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setSuggestions(filteredSuggestions);
+  };
+
   return (
     <form onSubmit={handleSubmit} className="relative w-full">
       <input
         type="text"
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={(e) => {
+          setQuery(e.target.value);
+          handleInputChange(e);
+        }}
         className="w-full rounded-full p-4 border border-gray-300 outline-none focus:border-blue-500"
         placeholder={`${filter ? `${filter.charAt(0).toUpperCase() + filter.slice(1)} ara...` : "Tepki ara..."}`}
         list="suggestions"
         //autoComplete="off" // add autocomplete attribute to disable default behavior on mobile devices
       />
       <datalist id="suggestions">
-        {suggestions && suggestions.map((suggestion) => (
-          <option key={suggestion} value={suggestion} />
-        ))}
+        {suggestions && suggestions
+          .sort(() => Math.random() - 0.5) // shuffle the array
+          .slice(0, 5) // take only the first 5 elements
+          .map((suggestion) => (
+            <option key={suggestion} value={suggestion} />
+          ))}
       </datalist>
       <button
         type="submit"
