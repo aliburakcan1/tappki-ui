@@ -21,8 +21,6 @@ const RandomReaction = () => {
       headers: { 'X-Session-ID': sessionId }, // add header to request   
     });    
     setVideo(response.data);  
-    console.log("GetVideo");  
-    console.log(response.data);
   };    
 
   useEffect(() => {

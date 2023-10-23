@@ -27,7 +27,7 @@ const SearchBar = ({ onSubmit, filter }) => {
     const host = process.env.NEXT_PUBLIC_BACKEND_HOST;  
     const http = process.env.NEXT_PUBLIC_BACKEND_HTTP;  
     const url = `${http}://${host}/api/suggestions`;
-    const response = await axios.get(url, {  
+    const response = await axios.post(url, null, {  
       headers: { 'X-Session-ID': sessionId }, // add header to request 
     });
     const data = response.data;
