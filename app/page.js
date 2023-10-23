@@ -18,7 +18,7 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);  
   const [totalVideos, setTotalVideos] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filter, setFilter] = useState(''); // Add filter state variable
+  const [filter, setFilter] = useState('Tepki'); // Add filter state variable
   //const [sessionId, setSessionId] = useState(uuidv4()); // generate UUID and store in state  
   const { sessionId } = useContext(SessionContext); // get sessionId from context
   const videosPerPage = 9;  
@@ -27,10 +27,10 @@ const Home = () => {
     const host = process.env.NEXT_PUBLIC_BACKEND_HOST;  
     const http = process.env.NEXT_PUBLIC_BACKEND_HTTP;  
     const url = `${http}://${host}/api/videos`;
-    const response = await axios.get(url, {  
-      params: { query: searchTerm, page, limit: videosPerPage }, 
-      headers: { 'X-Session-ID': sessionId }, // add header to request 
-    });  
+    const response = await axios.post(url, 
+      { query: searchTerm, page: page, limit: videosPerPage }, 
+      {headers: { 'X-Session-ID': sessionId }}, // add header to request 
+    );  
     setVideos(response.data.videos);  
     setTotalVideos(response.data.total);  
     setSearchActive(true);  
@@ -69,6 +69,14 @@ const Home = () => {
             key={JSON.stringify(videos)} // Add key prop to force a re-render  
           />  
         )}  
+        {searchActive && videos.length === 0 && (  
+          <div className="text-center mt-16">  
+            <p className="text-2xl">  
+              No videos found for <strong>{searchTerm}</strong>  
+            </p>  
+          </div>  
+        )
+        }
         {totalVideos > 0 && (  
           <Pagination    
           totalVideos={totalVideos}    
