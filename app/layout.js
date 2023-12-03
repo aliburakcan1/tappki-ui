@@ -5,7 +5,7 @@ import './globals.css';
 import Header from '../components/Header.js';  
   
 export const metadata = {  
-  title: 'Tappki',  
+  title: 'Tepki',  
   description: 'Lightning fast reaction video search engine',  
 }  
   

@@ -30,7 +30,7 @@ const PopularVideos = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">  
       <div className="container mx-auto px-4">  
         <img  
-            src="tappki_logo2.png"  
+            src="tepki_logo.png"  
             alt="Logo"  
             className="mx-auto mb-4 h-32 invisible"
           /> 

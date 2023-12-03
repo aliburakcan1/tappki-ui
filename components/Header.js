@@ -39,7 +39,7 @@ const Header = () => {
           } mx-auto items-center justify-between px-8 trasition ease-in-out duration-500`}
         >
           <Link href="/">
-              <img src="/tappki_logo2.png" alt="Tappki Logo" className="h-10" />
+              <img src="/tepki_logo.png" alt="Tepki Logo" className="h-10" />
           </Link>
           <nav className="backdrop-filter backdrop-blur-lg">
             <ul className="flex items-center justify-start">
