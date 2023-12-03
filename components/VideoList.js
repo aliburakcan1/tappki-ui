@@ -42,7 +42,7 @@ const VideoList = ({ videos, sessionId }) => {
       {videos.map((video) => (
         <div key={video.tweet_id} className="bg-white rounded shadow p-4 relative flex flex-col">
           <div className="w-full overflow-y-scroll flex-grow" style={{ maxHeight: '400px' }}>
-            <blockquote className="twitter-tweet">
+            <blockquote className="twitter-tweet" data-media-max-width="560">
               <a href={video.url}></a>
             </blockquote>
           </div>

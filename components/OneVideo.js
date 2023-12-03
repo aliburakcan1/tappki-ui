@@ -12,7 +12,7 @@ const OneVideo = ({ tweetId }) => {
   
   return (   
     <div key={tweetId} className='w-full'>
-        <blockquote className="twitter-tweet">
+        <blockquote className="twitter-tweet" data-media-max-width="560">
           <a href={`https://twitter.com/i/status/${tweetId}`}></a>  
         </blockquote>  
     </div>

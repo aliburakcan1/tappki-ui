@@ -21,7 +21,7 @@ const Home = () => {
   const [filter, setFilter] = useState('Tepki'); // Add filter state variable
   //const [sessionId, setSessionId] = useState(uuidv4()); // generate UUID and store in state  
   const { sessionId } = useContext(SessionContext); // get sessionId from context
-  const videosPerPage = 9;  
+  const videosPerPage = 6;  
   
   const searchVideos = async (searchTerm, page = 1) => {  
     const host = process.env.NEXT_PUBLIC_BACKEND_HOST;  
