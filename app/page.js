@@ -7,7 +7,6 @@ import axios from 'axios';
 import SearchBar from '../components/SearchBar';  
 import VideoList from '../components/VideoList';  
 import Pagination from '../components/Pagination'; 
-import FilterBar from '../components/FilterBar'; 
 import InfiniteBar from '../components/InfiniteBar';
 //import { v4 as uuidv4 } from 'uuid'; // import uuidv4 from uuid package
 import { SessionContext } from './SessionContext';  
@@ -56,10 +55,6 @@ const Home = () => {
   const handlePageChange = (newPage, searchTerm) => {    
     searchVideos(searchTerm, newPage);    
   };
-  
-  const handleFilterClick = (value) => {
-    setFilter(value);
-  }
     
   
   return (  
@@ -75,7 +70,7 @@ const Home = () => {
         <div className={`w-full ${searchActive ? "mb-8" : "mt-16"} sticky top-1 z-10`}>  
           <SearchBar onSubmit={searchVideos} filter={filter}/>  
         </div>
-        <InfiniteBar marqueeItems={marqueeItems} />
+        <InfiniteBar marqueeItems={marqueeItems} onItemClicked={searchVideos} />
         
         {videos.length > 0 && (  
           <VideoList  
