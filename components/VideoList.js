@@ -2,11 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Link from 'next/link';
 import VideoModal from './VideoModal';
+import { Tooltip } from 'react-tooltip'
 
-const VideoList = ({ videos, sessionId }) => {
+const VideoList = ({ videos, sessionId, onItemClicked }) => {
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [videoDetails, setVideoDetails] = useState({});
+  
+
 
   useEffect(() => {
     if (window.twttr) {
@@ -37,29 +40,67 @@ const VideoList = ({ videos, sessionId }) => {
     setSelectedVideo(null);
   };
 
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-      {videos.map((video) => (
-        <div key={video.tweet_id} className="bg-white rounded shadow p-4 relative flex flex-col">
-          <div className="w-full overflow-y-scroll flex-grow" style={{ maxHeight: '400px' }}>
-            <blockquote className="twitter-tweet" data-media-max-width="560">
-              <a href={video.url}></a>
-            </blockquote>
-          </div>
-          <button className="text-lg font-semibold mt-4 mb-2 hover:text-blue-500" onClick={() => handleVideoClick(video)}>
-            {video.title}
-          </button>
-          <div className="flex justify-between items-center">
-            <div className="flex-grow"></div>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={() => handleDownload(video.tweet_id)}>
-              Download
-            </button>
-          </div>
-        </div>
-      ))}
-      {selectedVideo && <VideoModal video={selectedVideo} onClose={handleCloseModal} />}
-    </div>
+  const handleVideoDetails = async (videoId) => {
+    const host = process.env.NEXT_PUBLIC_BACKEND_HOST;
+    const http = process.env.NEXT_PUBLIC_BACKEND_HTTP;
+    const url = `${http}://${host}/api/get_video_details`;
+    const response = await axios.post(url, {tweet_id: videoId}, {headers: { 'X-Session-ID': sessionId }});
+    //console.log(response.data);
+    setVideoDetails(response.data); // store the video details in the state
+  };
+
+
+  return (  
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">  
+      {videos.map((video, index) => (  
+        <div key={video.tweet_id} className="bg-white rounded shadow p-4 relative flex flex-col">  
+          <div className="w-full overflow-y-scroll flex-grow" style={{ maxHeight: '400px' }}>  
+            <blockquote className="twitter-tweet" data-media-max-width="560">  
+              <a href={video.url}></a>  
+            </blockquote>  
+          </div>  
+          <button className="text-lg font-semibold mt-4 mb-2 hover:text-blue-500" onClick={() => handleVideoClick(video)}>  
+            {video.title}  
+          </button>  
+          <div className="flex justify-between items-center">  
+          <a data-tooltip-id={`video-details-${index}`}>  
+              <button   
+                className="text-white px-4 py-2 rounded border border-blue-500"   
+                onClick={() => handleVideoDetails(video.tweet_id)}  
+              >  
+                ℹ️    
+              </button>  
+            </a>  
+            <Tooltip id={`video-details-${index}`} openOnClick="true" closeEvents={["mouseleave"]} clickable="true">  
+              <div>  
+                <ul>  
+                  {videoDetails.people || videoDetails.music || videoDetails.animal || videoDetails.program ? (
+                    <>
+                      {videoDetails.people && videoDetails.people.map((person, i) => (
+                      <li key={i}>👥: <button className="text-white hover:text-blue-500 hover:underline" onClick={() => onItemClicked(person)}>{person}</button></li>
+                      ))}
+                      {videoDetails.music && <li>🎶: <button className="text-white hover:text-blue-500 hover:underline" onClick={() => onItemClicked(videoDetails.music)}>{videoDetails.music}</button></li>}
+                      {videoDetails.animal && <li>🧸: <button className="text-white hover:text-blue-500 hover:underline" onClick={() => onItemClicked(videoDetails.animal)}>{videoDetails.animal}</button></li>}
+                      {videoDetails.program && <li>📺: <button className="text-white hover:text-blue-500 hover:underline" onClick={() => onItemClicked(videoDetails.program)}>{videoDetails.program}</button></li>}
+                                  
+                    </>
+                  ) : (
+                    <li>Bulunamadı</li>
+                  )}
+                </ul>  
+              </div>  
+            </Tooltip>
+            <div className="flex-grow"></div>  
+            <button className="text-black px-4 py-2 rounded border border-blue-500" onClick={() => handleDownload(video.tweet_id)}>  
+              ⬇️ İndir  
+            </button>  
+          </div> 
+        </div>  
+      ))}  
+      {selectedVideo && <VideoModal video={selectedVideo} onClose={handleCloseModal} />}  
+    </div>  
   );
+  
 };
 
 export default VideoList;

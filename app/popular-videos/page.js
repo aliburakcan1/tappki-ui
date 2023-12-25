@@ -6,11 +6,13 @@ import axios from 'axios';
 import VideoList from '../../components/VideoList';  
 import { SessionContext } from '../SessionContext';  
 import { useContext } from 'react';
+import { useRouter } from 'next/navigation'
 
 const PopularVideos = () => {  
   const [videos, setVideos] = useState([]);  
   const [rangeFilter, setRangeFilter] = useState('daily'); // Add filter state variable
   const { sessionId } = useContext(SessionContext); // get sessionId from context
+  const router = useRouter();
   
   const searchPopularVideos = async (rangeFilter) => {  
     const host = process.env.NEXT_PUBLIC_BACKEND_HOST;  
@@ -21,6 +23,13 @@ const PopularVideos = () => {
       setVideos(response.data.videos);  
     });
   };  
+
+  const handleItemClick = (video) => {
+    //console.log("video " + video);
+    router.push("/"+"?search="+video);
+  };
+  
+  
 
   useEffect(() => {
     searchPopularVideos(rangeFilter);
@@ -43,6 +52,7 @@ const PopularVideos = () => {
             videos={videos}  
             sessionId={sessionId} // Pass sessionId to VideoList component
             key={JSON.stringify(videos)} // Add key prop to force a re-render  
+            onItemClicked={handleItemClick}
         />  
       </div>  
     </div>  

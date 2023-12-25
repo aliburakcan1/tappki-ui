@@ -108,7 +108,7 @@ const VideoModal = ({ video, onClose }) => {
             })
             .then((response) => {
                 setAnnotation(response.data);
-                console.log(response.data);
+                //console.log(response.data);
             })
             .catch((error) => {
                 console.log(error);

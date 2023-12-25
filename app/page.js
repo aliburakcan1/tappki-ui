@@ -10,6 +10,8 @@ import Pagination from '../components/Pagination';
 import InfiniteBar from '../components/InfiniteBar';
 //import { v4 as uuidv4 } from 'uuid'; // import uuidv4 from uuid package
 import { SessionContext } from './SessionContext';  
+import { useSearchParams } from 'next/navigation';  
+
 
   
 const Home = () => {  
@@ -24,6 +26,9 @@ const Home = () => {
   const { sessionId } = useContext(SessionContext); // get sessionId from context
   const videosPerPage = 6;  
 
+  const searchParams = useSearchParams();  
+  const search = searchParams.get('search');  
+
   useEffect(() => {
     const fetchData = async () => {
       const host = process.env.NEXT_PUBLIC_BACKEND_HOST;  
@@ -36,6 +41,12 @@ const Home = () => {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {  
+    if (search) {  
+      searchVideos(search);  
+    }  
+  }, [search]);  
   
   const searchVideos = async (searchTerm, page = 1) => {  
     const host = process.env.NEXT_PUBLIC_BACKEND_HOST;  
@@ -77,7 +88,8 @@ const Home = () => {
             videos={videos}  
             sessionId={sessionId} // Pass sessionId to VideoList component
             key={JSON.stringify(videos)} // Add key prop to force a re-render  
-          />  
+            onItemClicked={searchVideos} // Make sure searchVideos is a function
+            />  
         )}  
         {searchActive && videos.length === 0 && (  
           <div className="text-center mt-16">  
