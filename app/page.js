@@ -73,7 +73,7 @@ const Home = () => {
       <div className="container mx-auto px-4">  
         <div className="text-center mb-8">  
           <img  
-            src="tappki_logo2.png"  
+            src="tepki_logo.png"  
             alt="Logo"  
             className={`mx-auto mb-4 h-32 ${ searchActive ? ( "invisible" ) : ( "visible" )} `}
           />  
