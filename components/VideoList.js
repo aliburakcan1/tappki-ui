@@ -8,14 +8,13 @@ import { Tooltip } from 'react-tooltip'
 const VideoList = ({ videos, sessionId, onItemClicked }) => {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [videoDetails, setVideoDetails] = useState({});
-  
-
+  const [refreshKeys, setRefreshKeys] = useState({}); // new state for refresh keys  
 
   useEffect(() => {
     if (window.twttr) {
       window.twttr.widgets.load();
     }
-  }, [videos]);
+  }, [videos, refreshKeys]);
 
   const handleDownload = async (videoId) => {
     // Get download link from backend
@@ -49,11 +48,15 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
     setVideoDetails(response.data); // store the video details in the state
   };
 
+    // add a new function to handle refresh  
+  const handleRefresh = (videoId) => {  
+    setRefreshKeys(oldKeys => ({ ...oldKeys, [videoId]: (oldKeys[videoId] || 0) + 1 })); // increment the refreshKey state to trigger re-render  
+  }; 
 
   return (  
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">  
       {videos.map((video, index) => (  
-        <div key={video.tweet_id} className="bg-white rounded shadow p-4 relative flex flex-col">  
+        <div key={`${video.tweet_id}-${refreshKeys[video.tweet_id] || 0}`} className="bg-white rounded shadow p-4 relative flex flex-col">      
           <div className="w-full overflow-y-scroll flex-grow" style={{ maxHeight: '400px' }}>  
             <blockquote className="twitter-tweet" data-media-max-width="560">  
               <a href={video.url}></a>  
@@ -63,14 +66,16 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
             {video.title}  
           </button>  
           <div className="flex justify-between items-center">  
-          <a data-tooltip-id={`video-details-${index}`}>  
+          
+          <div data-tooltip-id={`video-details-${index}`}>  
               <button   
-                className="text-white px-4 py-2 rounded border border-blue-500"   
+                className="text-white px-4 py-2 rounded border border-green-500 hover:bg-green-300"   
                 onClick={() => handleVideoDetails(video.tweet_id)}  
+                title="Detaylar için tıkla"
               >  
                 ℹ️    
               </button>  
-            </a>  
+            </div>  
             <Tooltip id={`video-details-${index}`} openOnClick="true" closeEvents={["mouseleave"]} clickable="true">  
               <div>  
                 <ul>  
@@ -90,10 +95,19 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
                 </ul>  
               </div>  
             </Tooltip>
-            <div className="flex-grow"></div>  
-            <button className="text-black px-4 py-2 rounded border border-blue-500" onClick={() => handleDownload(video.tweet_id)}>  
+            <div className="flex justify-center items-center" data-tooltip-id='refresh-button'>
+              <button onClick={() => handleRefresh(video.tweet_id)} className={`text-black px-4 py-2 rounded border border-green-500 hover:bg-green-300`}>🔄</button>
+            </div>  
+            <Tooltip id='refresh-button'>
+              <div>  
+                <p>  
+                  Yüklenmediyse yenile.  
+                </p>  
+              </div>
+            </Tooltip>
+            <button className="text-black px-4 py-2 rounded border border-green-500 hover:bg-green-300" onClick={() => handleDownload(video.tweet_id)}>  
               ⬇️ İndir  
-            </button>  
+            </button>   
           </div> 
         </div>  
       ))}  
