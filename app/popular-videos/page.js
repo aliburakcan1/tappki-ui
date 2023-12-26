@@ -44,9 +44,9 @@ const PopularVideos = () => {
             className="mx-auto mb-4 h-32 invisible"
           /> 
         <div className="flex justify-center my-4 sticky top-1 z-10">
-          <button className={`mx-2 ${rangeFilter === 'daily' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'} rounded-lg px-4 py-2`} onClick={() => setRangeFilter('daily')}>Daily</button>
-          <button className={`mx-2 ${rangeFilter === 'weekly' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'} rounded-lg px-4 py-2`} onClick={() => setRangeFilter('weekly')}>Weekly</button>
-          <button className={`mx-2 ${rangeFilter === 'monthly' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'} rounded-lg px-4 py-2`} onClick={() => setRangeFilter('monthly')}>Monthly</button>
+          <button className={`mx-2 ${rangeFilter === 'daily' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'} rounded-lg px-4 py-2`} onClick={() => setRangeFilter('daily')}>Bugün</button>
+          <button className={`mx-2 ${rangeFilter === 'weekly' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'} rounded-lg px-4 py-2`} onClick={() => setRangeFilter('weekly')}>Bu hafta</button>
+          <button className={`mx-2 ${rangeFilter === 'monthly' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'} rounded-lg px-4 py-2`} onClick={() => setRangeFilter('monthly')}>Bu ay</button>
         </div>
         <VideoList  
             videos={videos}  
