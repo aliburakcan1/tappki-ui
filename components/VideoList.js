@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import VideoModal from './VideoModal';
+//import VideoModal from './VideoModal';
 import { Tooltip } from 'react-tooltip'
 
 const VideoList = ({ videos, sessionId, onItemClicked }) => {
-  const [selectedVideo, setSelectedVideo] = useState(null);
+  //const [selectedVideo, setSelectedVideo] = useState(null);
   const [videoDetails, setVideoDetails] = useState({});
   const [refreshKeys, setRefreshKeys] = useState({}); // new state for refresh keys  
 
@@ -31,13 +31,12 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
     window.open(response.data, '_blank');
   };
 
-  const handleVideoClick = (video) => {
-    setSelectedVideo(video);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedVideo(null);
-  };
+  //const handleVideoClick = (video) => {
+  //  setSelectedVideo(video);
+  //};
+  //const handleCloseModal = () => {
+  //  setSelectedVideo(null);
+  //};
 
   const handleVideoDetails = async (videoId) => {
     const host = process.env.NEXT_PUBLIC_BACKEND_HOST;
@@ -62,7 +61,7 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
               <a href={video.url}></a>  
             </blockquote>  
           </div>  
-          <button className="text-lg font-semibold mt-4 mb-2 hover:text-blue-500" onClick={() => handleVideoClick(video)}>  
+          <button className="text-lg font-semibold mt-4 mb-2 hover:text-gray-500">  {/*onClick={() => handleVideoClick(video)}*/}
             {video.title}  
           </button>  
           <div className="flex justify-between items-center">  
@@ -111,7 +110,7 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
           </div> 
         </div>  
       ))}  
-      {selectedVideo && <VideoModal video={selectedVideo} onClose={handleCloseModal} />}  
+      {/* {selectedVideo && <VideoModal video={selectedVideo} onClose={handleCloseModal} />} */}
     </div>  
   );
   
