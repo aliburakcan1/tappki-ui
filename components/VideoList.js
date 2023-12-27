@@ -61,7 +61,7 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
               <a href={video.url}></a>  
             </blockquote>  
           </div>  
-          <button className="text-lg font-semibold mt-4 mb-2 hover:text-gray-500">  {/*onClick={() => handleVideoClick(video)}*/}
+          <button className="text-lg font-semibold mt-4 mb-2">  {/*onClick={() => handleVideoClick(video)}*/}
             {video.title}  
           </button>  
           <div className="flex justify-between items-center">  
