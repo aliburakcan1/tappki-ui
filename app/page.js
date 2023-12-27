@@ -1,8 +1,7 @@
 // app/page.js
 
 'use client';
-import React, { useState, useEffect } from 'react'; 
-import { useContext } from 'react';  
+import React, { useState, useEffect, useContext } from 'react'; 
 import axios from 'axios';  
 import SearchBar from '../components/SearchBar';  
 import VideoList from '../components/VideoList';  

@@ -26,7 +26,7 @@ const PopularVideos = () => {
 
   const handleItemClick = (video) => {
     //console.log("video " + video);
-    router.push("/"+"?search="+video);
+    router.push("/"+"?query="+video);
   };
   
   
