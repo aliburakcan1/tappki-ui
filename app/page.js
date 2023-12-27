@@ -9,7 +9,7 @@ import Pagination from '../components/Pagination';
 import InfiniteBar from '../components/InfiniteBar';
 //import { v4 as uuidv4 } from 'uuid'; // import uuidv4 from uuid package
 import { SessionContext } from './SessionContext';  
-import { useSearchParams } from 'next/navigation';  
+import { useSearchParams, useRouter } from 'next/navigation';  
 
 
   
@@ -25,8 +25,10 @@ const Home = () => {
   const { sessionId } = useContext(SessionContext); // get sessionId from context
   const videosPerPage = 6;  
 
+  const router = useRouter();
+
   const searchParams = useSearchParams();  
-  const search = searchParams.get('search');  
+  const search = searchParams.get('query');  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +46,11 @@ const Home = () => {
   useEffect(() => {  
     if (search) {  
       searchVideos(search);  
-    }  
+    } else {
+      setVideos([]); // Clear the videos if no search term is provided
+      setSearchActive(false);  
+      setTotalVideos(0);
+    }
   }, [search]);  
   
   const searchVideos = async (searchTerm, page = 1) => {  
@@ -78,16 +84,16 @@ const Home = () => {
           />  
         </div>  
         <div className={`w-full ${searchActive ? "mb-8" : "mt-16"} sticky top-1 z-10`}>  
-          <SearchBar onSubmit={searchVideos} filter={filter}/>  
+          <SearchBar onSubmit={(term) => router.push(`?query=${encodeURIComponent(term)}`)} filter={filter}/>  
         </div>
-        <InfiniteBar marqueeItems={marqueeItems} onItemClicked={searchVideos} />
+        <InfiniteBar marqueeItems={marqueeItems} onItemClicked={(term) => router.push(`?query=${encodeURIComponent(term)}`)} />
         
         {videos.length > 0 && (  
           <VideoList  
             videos={videos}  
             sessionId={sessionId} // Pass sessionId to VideoList component
             key={JSON.stringify(videos)} // Add key prop to force a re-render  
-            onItemClicked={searchVideos} // Make sure searchVideos is a function
+            onItemClicked={(term) => router.push(`?query=${encodeURIComponent(term)}`)}
             />  
         )}  
         {searchActive && videos.length === 0 && (  

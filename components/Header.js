@@ -3,9 +3,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname, useSearchParams } from 'next/navigation';
 
 const Header = () => {
   const [animateHeader, setAnimateHeader] = useState(false);
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
 
   useEffect(() => {
     const listener = () => {
@@ -21,14 +25,14 @@ const Header = () => {
   }, []);
 
   const menuItems = [
-    { title: "Ana Sayfa", url: "/" },
+    //{ title: "Ana Sayfa", url: "/" },
     { title: "Popüler", url: "/popular-videos" },
     { title: "Rastgele", url: "/random-reaction" }
   ];
 
   return (
     <header
-      className={`w-full fixed z-10 trasition ease-in-out duration-500 ${
+      className={`w-full fixed z-10 transition ease-in-out duration-500 ${
         animateHeader && "shadow-xl"
       }`}
     >
@@ -36,11 +40,16 @@ const Header = () => {
         <div
           className={`flex max-w-screen-xl py-10 ${
             animateHeader && "py-5"
-          } mx-auto items-center justify-between px-8 trasition ease-in-out duration-500`}
+          } mx-auto items-center justify-between px-8 transition ease-in-out duration-500`}
         >
-          <Link href="/">
+          {pathname !== '/' || searchParams.get('query') !== null
+          ? ( // conditionally render the logo based on the path
+            <Link href="/">
               <img src="/tepki_logo.png" alt="Tepki Logo" className="h-10" />
-          </Link>
+            </Link>
+          ) : (
+            <div className="h-10"></div> // render an empty div with the same width as the logo when the logo is not rendered
+          )}
           <nav className="backdrop-filter backdrop-blur-lg">
             <ul className="flex items-center justify-start">
               {menuItems?.map((item) => (
