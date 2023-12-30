@@ -9,6 +9,31 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
   //const [selectedVideo, setSelectedVideo] = useState(null);
   const [videoDetails, setVideoDetails] = useState({});
   const [refreshKeys, setRefreshKeys] = useState({}); // new state for refresh keys  
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = (videoId) => {
+    if (window.isSecureContext && navigator.clipboard) {
+      navigator.clipboard.writeText(`/reaction/${videoId}`).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1000); // Reset after 2 seconds
+      });
+    } else {
+      window.open(`/reaction/${videoId}`, '_blank');
+    }
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (window.twttr) {
@@ -61,12 +86,11 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
               <a href={video.url}></a>  
             </blockquote>  
           </div>  
-          <button className="text-lg font-semibold mt-4 mb-2">  {/*onClick={() => handleVideoClick(video)}*/}
+          <button className="text-lg font-semibold mt-4 mb-2" onClick={() => window.open("/reaction/"+video.tweet_id, '_blank')}>
             {video.title}  
           </button>  
           <div className="flex justify-between items-center">  
-          
-          <div data-tooltip-id={`video-details-${index}`}>  
+            <div data-tooltip-id={`video-details-${index}`}>  
               <button   
                 className="text-white px-4 py-2 rounded border border-green-500 hover:bg-green-300"   
                 onClick={() => handleVideoDetails(video.tweet_id)}  
@@ -97,13 +121,25 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
             <div className="flex justify-center items-center" data-tooltip-id='refresh-button'>
               <button onClick={() => handleRefresh(video.tweet_id)} className={`text-black px-4 py-2 rounded border border-green-500 hover:bg-green-300`}>🔄</button>
             </div>  
-            <Tooltip id='refresh-button'>
+            {!isMobile && <Tooltip id='refresh-button'>
               <div>  
                 <p>  
                   Yüklenmediyse yenile.  
                 </p>  
               </div>
-            </Tooltip>
+            </Tooltip>}
+            <div className="flex justify-center items-center" data-tooltip-id='share-button'>
+              <button onClick={() => handleShare(video.tweet_id)} className={`text-black px-4 py-2 rounded border border-green-500 hover:bg-green-300`}>  
+                🔗
+              </button> 
+            </div>  
+            {!isMobile && <Tooltip id='share-button'>
+              <div>  
+                <p>  
+                  {copied ? 'Copied!' : 'Paylaş'}
+                </p>  
+              </div>
+            </Tooltip>}
             <button className="text-black px-4 py-2 rounded border border-green-500 hover:bg-green-300" onClick={() => handleDownload(video.tweet_id)}>  
               ⬇️ İndir  
             </button>   
