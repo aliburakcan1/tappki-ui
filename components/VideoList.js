@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 //import VideoModal from './VideoModal';
-import { Tooltip } from 'react-tooltip'
+import { Tooltip } from 'react-tooltip';
 
 const VideoList = ({ videos, sessionId, onItemClicked }) => {
   //const [selectedVideo, setSelectedVideo] = useState(null);
@@ -12,11 +12,13 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [copied, setCopied] = useState(false);
 
+
   const handleShare = (videoId) => {
+    const fullUrl = `${window.location.origin}/reaction/${videoId}`;
     if (window.isSecureContext && navigator.clipboard) {
-      navigator.clipboard.writeText(`/reaction/${videoId}`).then(() => {
+      navigator.clipboard.writeText(fullUrl).then(() => {
         setCopied(true);
-        setTimeout(() => setCopied(false), 1000); // Reset after 2 seconds
+        setTimeout(() => setCopied(false), 1000); // Reset after 1 second
       });
     } else {
       window.open(`/reaction/${videoId}`, '_blank');
