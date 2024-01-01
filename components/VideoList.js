@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 //import VideoModal from './VideoModal';
 import { Tooltip } from 'react-tooltip';
+import Ad from '../components/Ad';
 
 const VideoList = ({ videos, sessionId, onItemClicked }) => {
   //const [selectedVideo, setSelectedVideo] = useState(null);
@@ -11,6 +12,19 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
   const [refreshKeys, setRefreshKeys] = useState({}); // new state for refresh keys  
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [copied, setCopied] = useState(false);
+  const [adIndex, setAdIndex] = useState(null);
+
+  // Generate random index for ad only once when the component is mounted
+  useEffect(() => {
+    setAdIndex(Math.floor(Math.random() * videos.length));
+  }, []);
+
+
+  // Insert ad at the adIndex
+  const videosWithAd = [...videos];
+  if (adIndex !== null) {
+    videosWithAd.splice(adIndex, 0, null);
+  }
 
 
   const handleShare = (videoId) => {
@@ -81,7 +95,16 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
 
   return (  
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">  
-      {videos.map((video, index) => (  
+      {videosWithAd.map((video, index) => {
+        if (video === null) {  
+          // Render the Ad component  
+          return (  
+            <div key={`ad-${index}`} className="flex justify-center items-center" style={{ minHeight: '250px' }}>  
+              <Ad />  
+            </div>  
+          );  
+        }
+        return (
         <div key={`${video.tweet_id}-${refreshKeys[video.tweet_id] || 0}`} className="bg-white rounded shadow p-4 relative flex flex-col">      
           <div className="w-full overflow-y-scroll flex-grow" style={{ maxHeight: '400px' }}>  
             <blockquote className="twitter-tweet" data-media-max-width="560">  
@@ -147,7 +170,10 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
             </button>   
           </div> 
         </div>  
-      ))}  
+      );
+      }
+      )
+      }
       {/* {selectedVideo && <VideoModal video={selectedVideo} onClose={handleCloseModal} />} */}
     </div>  
   );

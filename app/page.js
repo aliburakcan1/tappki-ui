@@ -23,7 +23,8 @@ const Home = () => {
   const [marqueeItems, setMarqueeItems] = useState([]);
   //const [sessionId, setSessionId] = useState(uuidv4()); // generate UUID and store in state  
   const { sessionId } = useContext(SessionContext); // get sessionId from context
-  const videosPerPage = 6;  
+  const [videosPerPage, setVideosPerPage] = useState(5);
+
 
   const router = useRouter();
 
@@ -58,11 +59,12 @@ const Home = () => {
     const http = process.env.NEXT_PUBLIC_BACKEND_HTTP;  
     const url = `${http}://${host}/api/videos`;
     const response = await axios.post(url, 
-      { query: searchTerm, page: page, limit: videosPerPage }, 
+      { query: searchTerm, page: page}, 
       {headers: { 'X-Session-ID': sessionId }}, // add header to request 
     );  
     setVideos(response.data.videos);  
     setTotalVideos(response.data.total);  
+    setVideosPerPage(response.data.videos_per_page);
     setSearchActive(true);  
     setCurrentPage(page);  
     setSearchTerm(searchTerm); // Add this line to update the searchTerm state  

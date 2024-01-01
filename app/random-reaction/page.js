@@ -6,6 +6,7 @@ import OneVideo from '../../components/OneVideo';
 //import { v4 as uuidv4 } from 'uuid'; // import uuidv4 from uuid package 
 import { useContext } from 'react';  
 import { SessionContext } from '../SessionContext';
+import Script from 'next/script';
 
     
 const RandomReaction = () => {    
@@ -28,6 +29,7 @@ const RandomReaction = () => {
   }, []); // Run GetVideo on mount
 
   return (    
+    <>
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">    
       <div className="mx-auto w-full max-w-2xl flex flex-col sm:flex-row items-center justify-center">      
         <OneVideo
@@ -41,6 +43,8 @@ const RandomReaction = () => {
         </button>
       </div>    
     </div>  
+    <Script src="//pl21987438.toprevenuegate.com/94/2f/a1/942fa1d3c7e175fcf309f0c3231cb0d5.js"/>
+    </>
   );      
 };    
     
