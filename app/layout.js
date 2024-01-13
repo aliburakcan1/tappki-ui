@@ -3,6 +3,7 @@
 import { SessionProvider } from './SessionContext';  
 import './globals.css';  
 import Header from '../components/Header.js';  
+import Footer from '../components/Footer.js';
   
 export const metadata = {  
   title: 'Tepki',  
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
         <SessionProvider>  
           <Header />  
           {children}  
+          <Footer />
         </SessionProvider>  
       </body>  
     </html>  
