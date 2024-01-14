@@ -40,7 +40,7 @@ const PopularVideos = () => {
       <div className="container mx-auto px-4">  
         <img  
             src="tepki_logo.png"  
-            alt="Logo"  
+            alt="Tepki"  
             className="mx-auto mb-4 h-32 invisible"
           /> 
         <div className="flex justify-center my-4 sticky top-1 z-10">

@@ -79,7 +79,7 @@ const Home = () => {
         <div className="text-center mb-8">  
           <img  
             src="tepki_logo.png"  
-            alt="Logo"  
+            alt="Tepki"  
             className={`mx-auto mb-4 h-32 ${ searchActive ? ( "invisible" ) : ( "visible" )} `}
           />  
         </div>  

@@ -139,7 +139,7 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
             {!isMobile && <Tooltip id='share-button'>
               <div>  
                 <p>  
-                  {copied ? 'Copied!' : 'Paylaş'}
+                  {copied ? 'Link Kopyalandı!' : 'Paylaş'}
                 </p>  
               </div>
             </Tooltip>}

@@ -22,7 +22,7 @@ const NewVideosPage = () => {
       const host = process.env.NEXT_PUBLIC_BACKEND_HOST;
       const http = process.env.NEXT_PUBLIC_BACKEND_HTTP;
       const url = `${http}://${host}/api/new_videos`;
-      const response = await axios.post(url, { page: currentPage, limit: videosPerPage });
+      const response = await axios.post(url, { page: currentPage, limit: videosPerPage }, {headers: { 'X-Session-ID': sessionId }});
       setVideos(response.data.videos);  
       setTotalVideos(response.data.total);  
     };
@@ -44,7 +44,7 @@ const NewVideosPage = () => {
       <div className="container mx-auto px-4">  
         <img  
             src="tepki_logo.png"  
-            alt="Logo"  
+            alt="Tepki"  
             className="mx-auto mb-4 h-32 invisible"
           /> 
       <VideoList 

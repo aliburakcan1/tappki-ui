@@ -46,7 +46,7 @@ const Header = () => {
           {pathname !== '/' || searchParams.get('query') !== null
           ? ( // conditionally render the logo based on the path
             <Link href="/">
-              <img src="/tepki_logo.png" alt="Tepki Logo" className="h-10" />
+              <img src="/tepki_logo.png" alt="Tepki" className="h-10" />
             </Link>
           ) : (
             <div className="h-10"></div> // render an empty div with the same width as the logo when the logo is not rendered
