@@ -99,8 +99,14 @@ const Home = () => {
         {searchActive && videos.length === 0 && (  
           <div className="text-center mt-16">  
             <p className="text-2xl">  
-              No videos found for <strong>{searchTerm}</strong>  
+              Aradığınız <strong>{searchTerm}</strong> maalesef bulunamadı. Bize ulaşın, ekleyelim.
             </p>  
+            <a className="text-xl" href="https://twitter.com/tepkisocial">
+            𝕏 Twitter: @tepkisocial
+            </a>
+            <p className="text-xl">
+              ✉️ İletişim için: tepkiapp@gmail.com
+            </p>
           </div>  
         )
         }
