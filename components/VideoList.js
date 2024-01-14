@@ -11,7 +11,6 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
   const [refreshKeys, setRefreshKeys] = useState({}); // new state for refresh keys  
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [copied, setCopied] = useState(false);
-  const [renderedVideos, setRenderedVideos] = useState([]); // new state for rendered videos
 
 
   const handleShare = (videoId) => {
@@ -40,34 +39,8 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
 
   useEffect(() => {
     if (window.twttr) {
-        window.twttr.events.bind(
-          'rendered',
-          function (event) {
-            //console.log(event.target.querySelector('iframe').getAttribute('data-tweet-id'));
-            renderedVideos.push(event.target.querySelector('iframe').getAttribute('data-tweet-id'));
-            setRenderedVideos(renderedVideos);
-          }
-        );
-  
-      // Load Twitter widgets
       window.twttr.widgets.load();
     }
-  
-    // Clean up function to unbind events
-    return () => {
-      if (window.twttr) {
-        window.twttr.events.unbind('rendered');
-      }
-      const host = process.env.NEXT_PUBLIC_BACKEND_HOST;
-      const http = process.env.NEXT_PUBLIC_BACKEND_HTTP;
-      const url = `${http}://${host}/api/report_deleted_video`;
-      const removedVideos = videos.filter(video => !renderedVideos.includes(video.tweet_id));
-      removedVideos.forEach(video => {
-        axios.post(url, {tweet_id: video.tweet_id}, {headers: { 'X-Session-ID': sessionId }});
-      });
-      //const response = axios.post(url, {tweet_id: videoId}, {headers: { 'X-Session-ID': sessionId }});
-      
-    };
   }, [videos, refreshKeys]);
   
 
