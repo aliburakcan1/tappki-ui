@@ -26,6 +26,7 @@ const Header = () => {
 
   const menuItems = [
     //{ title: "Ana Sayfa", url: "/" },
+    { title: "Son Eklenen", url: "/new-videos" },
     { title: "Popüler", url: "/popular-videos" },
     { title: "Rastgele", url: "/random-reaction" }
   ];

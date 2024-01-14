@@ -37,7 +37,7 @@ const Pagination = ({ totalVideos, videosPerPage, currentPage, onPageChange, sea
             onClick={() => handlePageClick(currentPage - 1)}  
             className="mx-1 my-1 py-2 px-4 rounded bg-white text-gray-800 border border-gray-400"  
           >  
-            Prev  
+            Önceki  
           </button>  
         )}  
         {renderPages()}  
@@ -46,7 +46,7 @@ const Pagination = ({ totalVideos, videosPerPage, currentPage, onPageChange, sea
             onClick={() => handlePageClick(currentPage + 1)}  
             className="mx-1 my-1 py-2 px-4 rounded bg-white text-gray-800 border border-gray-400"  
           >  
-            Next  
+            Sonraki  
           </button>  
         )}  
       </div>  
