@@ -11,6 +11,8 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
   const [refreshKeys, setRefreshKeys] = useState({}); // new state for refresh keys  
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [copied, setCopied] = useState(false);
+  const [clickedVideoIds, setClickedVideoIds] = useState(new Set());
+
 
 
   const handleShare = (videoId) => {
@@ -45,18 +47,23 @@ const VideoList = ({ videos, sessionId, onItemClicked }) => {
   
 
   const handleDownload = async (videoId) => {
-    // Get download link from backend
-    const host = process.env.NEXT_PUBLIC_BACKEND_HOST;
-    const http = process.env.NEXT_PUBLIC_BACKEND_HTTP;
-    const url = `${http}://${host}/api/get_download_link`;
-    // convert videoId to string
-    const response = await axios.post(url,
-      {video_id: videoId},
-      {headers: { 'X-Session-ID': sessionId }}, // add header to request
-    );
-
-    // Open download link in new tab
-    window.open(response.data, '_blank');
+    if (!clickedVideoIds.has(videoId)) {
+      window.open('//aickeebsi.com/4/7518089', '_blank');
+      setClickedVideoIds(prevState => new Set(prevState).add(videoId));
+    } else {
+      // Get download link from backend
+      const host = process.env.NEXT_PUBLIC_BACKEND_HOST;
+      const http = process.env.NEXT_PUBLIC_BACKEND_HTTP;
+      const url = `${http}://${host}/api/get_download_link`;
+      // convert videoId to string
+      const response = await axios.post(url,
+        {video_id: videoId},
+        {headers: { 'X-Session-ID': sessionId }}, // add header to request
+      );
+  
+      // Open download link in new tab
+      window.open(response.data, '_blank');
+    }
   };
 
   //const handleVideoClick = (video) => {

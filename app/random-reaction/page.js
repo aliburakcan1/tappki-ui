@@ -25,6 +25,15 @@ const RandomReaction = () => {
 
   useEffect(() => {
     GetVideo();
+
+    // Add the ad script
+    //const s = document.createElement('script');
+    //s.src = 'https://gloaphoo.net/401/7517899';
+    //try {
+    //  (document.body || document.documentElement).appendChild(s);
+    //} catch(e) {
+    //  console.error(e);
+    //}
   }, []); // Run GetVideo on mount
 
   return (    
