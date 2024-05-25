@@ -84,7 +84,7 @@ const Home = () => {
           />  
         </div>  
         <div className={`w-full ${searchActive ? "mb-8" : "mt-16"} sticky top-1 z-10`}>  
-          <SearchBar onSubmit={(term) => router.push(`?query=${encodeURIComponent(term)}`)} filter={filter}/>  
+          <SearchBar onSubmit={(term) => router.push(`?query=${encodeURIComponent(term)}`)} filter={filter} searchTerm={searchTerm}/>
         </div>
         <InfiniteBar marqueeItems={marqueeItems} onItemClicked={(term) => router.push(`?query=${encodeURIComponent(term)}`)} />
         

@@ -5,10 +5,15 @@ import React, { useState, useEffect } from "react";
 //import { useContext } from 'react'; 
 
 
-const SearchBar = ({ onSubmit, filter }) => {
-  const [query, setQuery] = useState("");
+const SearchBar = ({ onSubmit, filter, searchTerm }) => {
+  const [query, setQuery] = useState(searchTerm);
   //const { sessionId } = useContext(SessionContext); // get sessionId from context
 
+
+
+  useEffect(() => {
+    setQuery(searchTerm);
+  }, [searchTerm]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
