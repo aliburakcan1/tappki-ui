@@ -6,7 +6,7 @@ import axios from 'axios';
 import SearchBar from '../components/SearchBar';  
 import VideoList from '../components/VideoList';  
 import Pagination from '../components/Pagination'; 
-import InfiniteBar from '../components/InfiniteBar';
+import InfiniteBar2 from '../components/InfiniteBar2';
 //import { v4 as uuidv4 } from 'uuid'; // import uuidv4 from uuid package
 import { SessionContext } from './SessionContext';  
 import { useSearchParams, useRouter } from 'next/navigation';  
@@ -86,7 +86,7 @@ const Home = () => {
         <div className={`w-full ${searchActive ? "mb-8" : "mt-16"} sticky top-1 z-10`}>  
           <SearchBar onSubmit={(term) => router.push(`?query=${encodeURIComponent(term)}`)} filter={filter} searchTerm={searchTerm}/>
         </div>
-        <InfiniteBar marqueeItems={marqueeItems} onItemClicked={(term) => router.push(`?query=${encodeURIComponent(term)}`)} />
+        <InfiniteBar2 marqueeItems={marqueeItems} onItemClicked={(term) => router.push(`?query=${encodeURIComponent(term)}`)} />
         
         {videos.length > 0 && (  
           <VideoList  
